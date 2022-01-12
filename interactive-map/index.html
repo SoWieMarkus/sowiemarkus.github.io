@@ -9,6 +9,16 @@
             font-size: 14px;
             color: #333;
         }
+        div.tooltip {
+            position: absolute;
+            padding: 4px;
+            text-align: center;
+            font: 12px sans-serif;
+            background: lightsteelblue;
+            border: 0px;
+            pointer-events: none;
+            border-radius: 2px;
+        }
 
     </style>
 
@@ -50,7 +60,8 @@
         .attr("height", "100%")
         .attr("fill", backgroundColor);
 
-    let div = d3.select("body").append("div")
+
+    let tooltip = d3.select("body").append("div")
         .attr("class", "tooltip")
         .style("opacity", 0);
 
@@ -60,20 +71,41 @@
         .range(d3.schemeBlues[7]);
 
     d3.queue()
-        .defer(d3.json, "landkreise.geojson")
+        .defer(d3.json, "kreis.geojson")
         .await(ready);
+
+    let color = function (d) {
+        return d.properties.color;
+    }
 
     function ready(error, topo) {
 
         let mouseOver = function (d) {
-            d3.selectAll(".Country").attr("fill", fillColor)
+            d3.selectAll(".Country").attr("fill", color).style("opacity",0.8);
             if (d.properties.link === null) return;
-            d3.select(this).attr("fill", hoverColor).style("stroke", borderHoverColor)
+            d3.select(this).attr("fill", color).style("opacity",1);
+
+            tooltip.transition()
+                .duration(200)
+                .style("opacity", .9);
+            tooltip.html(d.properties.KREIS)
+                .style("left", (d3.event.pageX) + "px")
+                .style("top", (d3.event.pageY-18) + "px");
+        }
+
+        let mousemove = function (d) {
+            tooltip.html(d.properties.KREIS)
+            .style("left", (d3.event.pageX) + "px")
+            .style("top", (d3.event.pageY - 18) + "px");
+
         }
 
         let mouseLeave = function (d) {
-            d3.selectAll(".Country").attr("fill", fillColor);
-            d3.select(this).attr("fill", fillColor).style("stroke", borderColor)
+            d3.selectAll(".Country").attr("fill", color).style("opacity",1);
+            d3.select(this).attr("fill", color)
+            tooltip.transition()
+                .duration(500)
+                .style("opacity", 0);
         }
 
         svg.append("g")
@@ -83,7 +115,7 @@
             .append("path")
             .attr("d", d3.geoPath().projection(projection))
             .attr("pointer-events", "visible")
-            .attr("fill", fillColor)
+            .attr("fill", color)
             .attr("cursor", function (d) {
                 if (d.properties.link === null) return "no-drop";
                 return "pointer";
@@ -96,6 +128,7 @@
             .style("opacity", 1)
             .on("mouseover", mouseOver)
             .on("mouseleave", mouseLeave)
+            .on("mousemove", mousemove)
             .on("click", function (d) {
                 if (d.properties.link === null) return;
                 window.location.href = window.location.href += d.properties.link;
