@@ -81,8 +81,8 @@
     // store result in offsetBlur
     filter.append("feOffset")
         .attr("in", "blur")
-        .attr("dx", 5)
-        .attr("dy", 5)
+        .attr("dx", 3)
+        .attr("dy", 3)
         .attr("result", "offsetBlur");
 
     // overlay original SourceGraphic over translated blurred opacity by using
@@ -115,7 +115,7 @@
     function ready(error, topo) {
 
         let mouseOver = function (d) {
-            d3.selectAll(".Country").attr("fill", color).style("opacity",0.8);
+            d3.selectAll(".Country").attr("fill", color).style("opacity",.6);
             if (d.properties.link === null) return;
             d3.select(this).attr("fill", color).style("opacity",1);
 
