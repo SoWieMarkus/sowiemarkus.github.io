@@ -4,14 +4,35 @@
     <meta charset="UTF-8">
     <title>GranaDy random block generator</title>
     <link rel="icon" type="image/x-icon" href="images/icon.webp">
-</head>
-<body>
 
-<div>
+    <style>
+        .outer {
+            width: 100%;
+            text-align: center;
+        }
+
+        .inner {
+            display: inline-block;
+        }
+
+        h1 {
+            font-family: Arial;
+        }
+    </style>
+</head>
+<body class="outer">
+
+<div class="inner">
+
+    <h1>Trackmania Random Block Generator</h1>
+
+    <span id="path" style="font-size: 50px; font-family: Arial"></span><br>
     <button onclick="selectRandom()">Random block</button>
-    <span id="path"></span>
+
     <img id="icon" style="display: none" src="https://cdn.discordapp.com/attachments/686293668033855534/996819991561252944/rickroll-roll.gif">
 </div>
+
+
 
 <script>
 
