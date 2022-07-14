@@ -44,7 +44,7 @@
 <script>
 
     var amount = 0;
-    let active = false;
+
 
     function selectRandom() {
         amount++;
@@ -54,10 +54,10 @@
 
         document.getElementById("path").innerText = parts[0];
         document.getElementById("counter").innerText = "Counter: " + amount + " " + (amount === 1 ? "block" : "blocks") + " generated";
-        if (!active)
-            document.getElementById("icon").src = "images/" + parts[1] + ".png";
 
-        if (amount === 25) {
+        document.getElementById("icon").src = "images/" + parts[1] + ".png";
+
+        /*if (amount === 25) {
             active = true;
             document.getElementById("path").innerText = parts[0]+"\nHappy Birthday Nico!";
             document.getElementById("icon").src = "https://cdn.discordapp.com/attachments/686293668033855534/996819991561252944/rickroll-roll.gif"
@@ -68,7 +68,7 @@
                 audio.pause();
                 active = false;
             }, 10000)
-        }
+        }*/
     }
 
     function getAltImage() { // min and max included
