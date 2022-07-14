@@ -38,6 +38,7 @@
 <script>
 
     var amount = 0;
+    let active = false;
     function selectRandom(){
         amount++;
 
@@ -45,17 +46,19 @@
         let parts = block.split(" ");
 
         document.getElementById("path").innerText = parts[0];
-        document.getElementById("icon").src = "images/"+parts[1]+".png";
+        if (!active)
+            document.getElementById("icon").src = "images/"+parts[1]+".png";
 
         if (amount === 25) {
-
-            /*document.getElementById("icon").src = "https://cdn.discordapp.com/attachments/686293668033855534/996819991561252944/rickroll-roll.gif"
+            active = true;
+            document.getElementById("icon").src = "https://cdn.discordapp.com/attachments/686293668033855534/996819991561252944/rickroll-roll.gif"
 
             var audio = new Audio('images/sound.mp3');
             audio.play();
             setTimeout(function () {
                 audio.pause();
-            }, 10000)*/
+                active = false;
+            }, 10000)
         }
     }
 
