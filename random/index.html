@@ -43,6 +43,8 @@
         <input type="checkbox" name="Filter" id="road_block" filter="Road" checked>Road Blocks
         <input type="checkbox" name="Filter" id="dirt_block" filter="Dirt" checked>Dirt Blocks
         <input type="checkbox" name="Filter" id="plastic_block" filter="Plastic" checked>Plastic Blocks
+        <input type="checkbox" name="Filter" id="structure_block" filter="Structure" checked>Structure Blocks
+        <input type="checkbox" name="Filter" id="screen_block" filter="Screen" checked>Screen Blocks
         <input type="checkbox" name="Filter" id="grass_block" filter="Grass" checked>Grass Blocks<br>
         <input type="checkbox" name="Filter" id="sausage_block" filter="Bump" checked>Sausage Blocks
         <input type="checkbox" name="Filter" id="water_block" filter="Water" checked>Water Blocks<br>
@@ -54,29 +56,42 @@
 
     var amount = 0;
 
+    function selected() {
+        const filters = document.querySelectorAll("input[name=Filter]");
+        let selected = false;
+        filters.forEach((filter) => {
+            if (filter.checked) {
+                selected = true;
+            }
+        });
+        return selected;
+    }
 
     function isBlockValid(block) {
         var isIncluded = false;
         const filters = document.querySelectorAll("input[name=Filter]");
         filters.forEach((filter) => {
-            if(filter.checked)
-            {   
-                if(block.includes(filter.getAttribute('filter'))) {
+            if (filter.checked) {
+                if (block.includes(filter.getAttribute('filter'))) {
                     isIncluded = true;
                 }
             }
         });
         return isIncluded;
     }
+
     function selectRandom() {
         amount++;
 
         let block = '';
-        do
-        {
-            block = paths[Math.floor(Math.random() * paths.length)];
+        if (selected()) {
+            do {
+                block = paths[Math.floor(Math.random() * paths.length)];
+            }
+            while (!isBlockValid(block));
+        } else {
+            block = "No_Result HUH_1"
         }
-        while(!isBlockValid(block));        
         let parts = block.split(" ");
 
         document.getElementById("path").innerText = parts[0];
