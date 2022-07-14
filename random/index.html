@@ -18,6 +18,7 @@
         h1 {
             font-family: Arial;
         }
+
         body {
             margin: 0;
         }
@@ -28,29 +29,33 @@
 <div class="inner">
 
     <h1>Trackmania Random Block Generator</h1>
-    <button onclick="selectRandom()">Random block</button><br>
-    <span id="path" style="font-size: 50px; font-family: Arial"></span><br>
+    <button onclick="selectRandom()">Random block</button>
     <br>
+
+    <span id="counter" style="font-size: 10px; color: gray; font-family: Arial"></span>
+    <br>
+    <span id="path" style="font-size: 50px; font-family: Arial"></span><br>
 
     <img id="icon" src="images/icon.webp" onerror="this.src = getAltImage()"><br>
 
 </div>
 
 
-
 <script>
 
     var amount = 0;
     let active = false;
-    function selectRandom(){
+
+    function selectRandom() {
         amount++;
 
-        let block = paths[Math.floor(Math.random()*paths.length)];
+        let block = paths[Math.floor(Math.random() * paths.length)];
         let parts = block.split(" ");
 
         document.getElementById("path").innerText = parts[0];
+        document.getElementById("counter").innerText = "Counter: " + amount + " " + (amount === 1 ? "block" : "blocks") + " generated";
         if (!active)
-            document.getElementById("icon").src = "images/"+parts[1]+".png";
+            document.getElementById("icon").src = "images/" + parts[1] + ".png";
 
         if (amount === 25) {
             active = true;
@@ -70,7 +75,7 @@
         let min = 1
         let randomNumber = Math.floor(Math.random() * (max - min + 1) + min);
         console.log(randomNumber)
-        return 'images/HUH_'+randomNumber+'.webp'
+        return 'images/HUH_' + randomNumber + '.webp'
     }
 
     const paths = [
