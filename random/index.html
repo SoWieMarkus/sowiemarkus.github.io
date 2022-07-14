@@ -37,7 +37,16 @@
     <span id="path" style="font-size: 50px; font-family: Arial"></span><br>
 
     <img id="icon" src="images/icon.webp" onerror="this.src = getAltImage()"><br>
-
+    <h3>Filters (Inclusive)</h3>
+    <div>
+        <input type="checkbox" name="Filter" id="ice_block" filter="Ice" checked>Ice Blocks
+        <input type="checkbox" name="Filter" id="road_block" filter="Road" checked>Road Blocks
+        <input type="checkbox" name="Filter" id="dirt_block" filter="Dirt" checked>Dirt Blocks
+        <input type="checkbox" name="Filter" id="plastic_block" filter="Plastic" checked>Plastic Blocks
+        <input type="checkbox" name="Filter" id="grass_block" filter="Grass" checked>Grass Blocks<br>
+        <input type="checkbox" name="Filter" id="sausage_block" filter="Bump" checked>Sausage Blocks
+        <input type="checkbox" name="Filter" id="water_block" filter="Water" checked>Water Blocks<br>
+    </div>
 </div>
 
 
@@ -46,10 +55,28 @@
     var amount = 0;
 
 
+    function isBlockValid(block) {
+        var isIncluded = false;
+        const filters = document.querySelectorAll("input[name=Filter]");
+        filters.forEach((filter) => {
+            if(filter.checked)
+            {   
+                if(block.includes(filter.getAttribute('filter'))) {
+                    isIncluded = true;
+                }
+            }
+        });
+        return isIncluded;
+    }
     function selectRandom() {
         amount++;
 
-        let block = paths[Math.floor(Math.random() * paths.length)];
+        let block = '';
+        do
+        {
+            block = paths[Math.floor(Math.random() * paths.length)];
+        }
+        while(!isBlockValid(block));        
         let parts = block.split(" ");
 
         document.getElementById("path").innerText = parts[0];
